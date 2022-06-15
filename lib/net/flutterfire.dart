@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future signIn(String email, String password) async {
@@ -27,6 +28,20 @@ Future registerUser(String email, String password) async{
   }
 }
 
-Future addCoin() async{
-  
+Future addCoin(String id, String amount) async{
+  try{
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    var value = double.parse(amount);
+    DocumentReference documentReference = FirebaseFirestore.instance.
+    collection('users').
+    doc(uid).
+    collection('coins').
+    doc(id);
+
+    FirebaseFirestore.instance.runTransaction((transaction) async{
+      DocumentSnapshot snapshot = await transaction.get(documentReference);
+    });
+  } catch (e){
+    return false;
+  }
 }
