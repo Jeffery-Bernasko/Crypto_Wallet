@@ -24,7 +24,7 @@ class _HomeViewState extends State<HomeView> {
         child: Center(
           child: StreamBuilder(
             stream: FirebaseFirestore.instance.
-            collection('User').
+            collection('Users').
             doc(FirebaseAuth.instance.currentUser.uid).
             collection('Coins').
             snapshots(),

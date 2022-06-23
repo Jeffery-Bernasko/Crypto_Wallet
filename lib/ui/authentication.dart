@@ -19,45 +19,43 @@ class _AuthenticationState extends State<Authentication> {
       body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(color: Colors.blueAccent),
+          decoration: BoxDecoration(color: Colors.white),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              
               Container(
                 width: MediaQuery.of(context).size.width / 1.3,
-                child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                child: TextField(
+                  style: TextStyle(color: Colors.black),
                   controller: _emailField,
                   decoration: InputDecoration(
-                   // icon: Icon(Icons.email_sharp),
-                    hintText: 'some@email.com',
-                    hintStyle: TextStyle(
-                      color: Colors.white,
+                    labelText: "E-mail",
+                  enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  borderSide: BorderSide(
+                  color: Colors.grey
                     ),
-                    labelText: 'Email',
-                    labelStyle: TextStyle(
-                      color: Colors.white
-                      ),
+                    ),
+                   // icon: Icon(Icons.email_sharp),
                   ),
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height/35,),
               Container(
                 width: MediaQuery.of(context).size.width / 1.3,
-                child: TextFormField(
-                  style: TextStyle(color: Colors.white),
+                child: TextField(
                   controller: _passwordField,
                   obscureText: true,
                   decoration: InputDecoration(
+                    labelText: "Password",
+                  enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  borderSide: BorderSide(
+                  color: Colors.grey
+                  ),
+                  ),
                   //  icon: Icon(Icons.lock_outline_sharp),
-                    hintText: 'password',
-                    hintStyle: TextStyle(
-                      color: Colors.white
-                    ),
-                    labelText: 'password',
-                    labelStyle: TextStyle(
-                      color: Colors.white
-                      ),
                 ),
                 ),
               ),
@@ -70,7 +68,7 @@ class _AuthenticationState extends State<Authentication> {
                   color: Colors.white
                 ),
 
-                child: MaterialButton(
+                child: ElevatedButton(
                   onPressed: () async {
                     bool shouldNavigate = await registerUser(_emailField.text, _passwordField.text);
                     if(shouldNavigate){
@@ -89,7 +87,7 @@ class _AuthenticationState extends State<Authentication> {
                   color: Colors.white
                 ),
 
-                child: MaterialButton(
+                child: ElevatedButton(
                   onPressed: () async {
                     bool shouldNavigate = await signIn(_emailField.text, _passwordField.text);
                     if(shouldNavigate){

@@ -6,12 +6,12 @@ Future signIn(String email, String password) async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     return true;
   } catch (e){
-    print(e);
+    print(e.toString());
     return false;
   }
 }
 
-Future registerUser(String email, String password) async{
+Future registerUser(String email, String password) async {
   try{
     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
     return true;
@@ -33,14 +33,22 @@ Future addCoin(String id, String amount) async{
     String uid = FirebaseAuth.instance.currentUser.uid;
     var value = double.parse(amount);
     DocumentReference documentReference = FirebaseFirestore.instance.
-    collection('users').
+    collection('Users').
     doc(uid).
-    collection('coins').
+    collection('Coins').
     doc(id);
 
-    FirebaseFirestore.instance.runTransaction((transaction) async{
+    FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(documentReference);
+      if(!snapshot.exists){
+        documentReference.set({'Amount': value});
+        return true;
+      }
+      double newAmount =  (snapshot.data() as Map)['Amount'] + value;
+      transaction.update(documentReference, {'Amount': newAmount});
+      return true;
     });
+    return true;
   } catch (e){
     return false;
   }
